@@ -2,18 +2,19 @@ FROM ubuntu:quantal
 MAINTAINER Fernando Mayo <fernando@tutum.co>
 
 # Install packages
-RUN apt-get update && apt-get -y upgrade && ! DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql
+RUN apt-get update && apt-get -y upgrade && ! DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen
 
 # Add image configuration and scripts
 ADD ./start-apache2.sh /start-apache2.sh
 ADD ./start-mysqld.sh /start-mysqld.sh
 ADD ./run.sh /run.sh
+RUN chmod 755 /*.sh
 ADD ./my.cnf /etc/mysql/conf.d/my.cnf
 ADD ./supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD ./supervisord-mysqld.conf /etc/supervisor/conf.d/supervisord-mysqld.conf
 
 # Add MySQL utils
-ADD ./set_mysql_root_pw.sh /set_mysql_root_pw.sh
+ADD ./create_mysql_admin_user.sh /create_mysql_admin_user.sh
 ADD ./import_sql.sh /import_sql.sh
 ADD ./create_db.sh /create_db.sh
 RUN chmod 755 /*.sh
@@ -22,5 +23,5 @@ RUN chmod 755 /*.sh
 RUN git clone https://github.com/fermayo/hello-world-lamp.git /app
 RUN mkdir -p /app && rm -fr /var/www && ln -s /app /var/www
 
-EXPOSE 80
+EXPOSE 80 3306
 CMD ["/run.sh"]
