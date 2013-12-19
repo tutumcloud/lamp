@@ -66,7 +66,7 @@ That's it!
 Connecting to the bundled MySQL server from within the container
 ----------------------------------------------------------------
 
-The bunlded MySQL server has a `root` user with no password for local connections.
+The bundled MySQL server has a `root` user with no password for local connections.
 Simply connect from your PHP code with this user:
 
 	<?php
@@ -104,4 +104,5 @@ It will print the allocated port (like 4751). You can then connect to MySQL:
 
 	 mysql -uadmin -p47nnf4FweaKu -h127.0.0.1 -P4751
 
-Done!
+Remember that the `root` user does not allow connections from outside the container - 
+you should use this `admin` user instead!
