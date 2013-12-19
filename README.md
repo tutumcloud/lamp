@@ -63,8 +63,20 @@ It will print the allocated port (like 4751). Test your deployment:
 That's it!
 
 
-Connecting to the bundled MySQL server
---------------------------------------
+Connecting to the bundled MySQL server from within the container
+----------------------------------------------------------------
+
+The bunlded MySQL server has a `root` user with no password for local connections.
+Simply connect from your PHP code with this user:
+
+	<?php
+	$mysql = new mysqli("localhost", "root");
+	echo "MySQL Server info: ".$mysql->host_info;
+	?>
+
+
+Connecting to the bundled MySQL server from outside the container
+-----------------------------------------------------------------
 
 The first time that you run your container, a new user `admin` with all privileges 
 will be created in MySQL with a random password. To get the password, check the logs
