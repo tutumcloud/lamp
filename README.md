@@ -13,23 +13,19 @@ To create the image `tutum/lamp`, execute the following command on the tutum-doc
 
 You can now push your new image to the registry:
 
-	sudo docker push tutum/lamp
+	docker push tutum/lamp
 
 
 Running your LAMP docker image
 ------------------------------
 
-Start your image:
+Start your image binding the external ports 80 and 3306 in all interfaces to your container:
 
-	sudo docker run -d -p 80 -p 3306 tutum/lamp
+	docker run -d -p 80:80 -p 3306:3306 tutum/lamp
 
-It will print the new container ID (like `d35bf1374e88`). Get the allocated external port for Apache:
+Test your deployment:
 
-	sudo docker port d35bf1374e88 80
-
-It will print the allocated port (like 4751). Test your deployment:
-
-	curl http://localhost:4751/
+	curl http://localhost/
 
 Hello world!
 
@@ -48,16 +44,15 @@ create a new `Dockerfile` in an empty folder with the following contents:
 replacing `https://github.com/username/customapp.git` with your application's GIT repository.
 After that, build the new `Dockerfile`:
 
-	sudo docker build -t username/my-lamp-app .
+	docker build -t username/my-lamp-app .
 
 And test it:
 
-	CONTAINER_ID=$(sudo docker run -d -p 80 username/my-lamp-app)
-	sudo docker port $CONTAINER_ID 80
+	docker run -d -p 80:80 -p 3306:3306 username/my-lamp-app
 
-It will print the allocated port (like 4751). Test your deployment:
+Test your deployment:
 
-	curl http://localhost:4751/
+	curl http://localhost/
 
 That's it!
 
@@ -81,7 +76,7 @@ The first time that you run your container, a new user `admin` with all privileg
 will be created in MySQL with a random password. To get the password, check the logs
 of the container by running:
 
-	sudo docker logs $CONTAINER_ID
+	docker logs $CONTAINER_ID
 
 You will see an output like the following:
 
@@ -94,14 +89,24 @@ You will see an output like the following:
 	MySQL user 'root' has no password but only allows local connections
 	========================================================================
 
-In this case, `47nnf4FweaKu` is the password allocated to the `admin` user. To get
-the allocated port to MySQL, execute:
+In this case, `47nnf4FweaKu` is the password allocated to the `admin` user.
 
-	sudo docker port $CONTAINER_ID 3306
+You can then connect to MySQL:
 
-It will print the allocated port (like 4751). You can then connect to MySQL:
-
-	 mysql -uadmin -p47nnf4FweaKu -h127.0.0.1 -P4751
+	 mysql -uadmin -p47nnf4FweaKu
 
 Remember that the `root` user does not allow connections from outside the container - 
 you should use this `admin` user instead!
+
+
+Setting a specific password for the MySQL server admin account
+--------------------------------------------------------------
+
+If you want to use a preset password instead of a random generated one, you can
+set the environment variable `MYSQL_PASS` to your specific password when running the container:
+
+	docker run -d -p 80:80 -p 3306:3306 -e MYSQL_PASS="mypass" tutum/lamp
+
+You can now test your new admin password:
+
+	mysql -uadmin -p"mypass"
