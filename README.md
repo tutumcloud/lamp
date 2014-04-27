@@ -110,3 +110,11 @@ set the environment variable `MYSQL_PASS` to your specific password when running
 You can now test your new admin password:
 
 	mysql -uadmin -p"mypass"
+
+
+Enabling .httaccess support
+---------------------------
+
+To enable .httacess, you need to specify environment variable `ENABLE_HTACCESS` to true, either in `Docker` file or in command line when running the container:
+
+	docker run -d -p 80:80 -p 3306:3306 -e ENABLE_HTACCESS=True tutum/lamp
