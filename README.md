@@ -111,4 +111,4 @@ You can now test your new admin password:
 
 	mysql -uadmin -p"mypass"
 
-**by http://www.tutum.co
+**by http://www.tutum.co**
