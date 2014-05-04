@@ -110,3 +110,5 @@ set the environment variable `MYSQL_PASS` to your specific password when running
 You can now test your new admin password:
 
 	mysql -uadmin -p"mypass"
+
+**by http://www.tutum.co
