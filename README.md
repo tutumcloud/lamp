@@ -112,7 +112,7 @@ You can now test your new admin password:
 	mysql -uadmin -p"mypass"
 
 
-Disabling .httaccess
+Disabling .htaccess
 --------------------
 
 To disable '.httacess', you need to specify environment variable `ENABLE_HTACCESS` to `False`, either in `Docker` file or in command line when running the container:
