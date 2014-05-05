@@ -19,6 +19,12 @@ ADD import_sql.sh /import_sql.sh
 ADD create_db.sh /create_db.sh
 RUN chmod 755 /*.sh
 
+# config to enable .htaccess
+ENV ENABLE_HTACCESS True
+ADD apache_default /apache_default
+ADD enable_htaccess.sh /enable_htaccess.sh
+RUN chmod 755 /*.sh
+
 # Configure /app folder with sample app
 RUN git clone https://github.com/fermayo/hello-world-lamp.git /app
 RUN mkdir -p /app && rm -fr /var/www && ln -s /app /var/www
