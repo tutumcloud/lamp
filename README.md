@@ -115,9 +115,11 @@ You can now test your new admin password:
 Disabling .htaccess
 --------------------
 
-To disable '.httacess', you need to specify environment variable `ENABLE_HTACCESS` to `False`, either in `Docker` file or in command line when running the container:
+`.htacess` is enabled by default. To disable `.htacess`, you can remove the following contents from `Dockerfile`
 
-	docker run -d -p 80:80 -p 3306:3306 -e ENABLE_HTACCESS=False tutum/lamp
+	# config to enable .htaccess
+    ADD apache_default /etc/apache2/sites-available/000-default.conf
+    RUN a2enmod rewrite
 
 
 **by http://www.tutum.co**
