@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ -f /.mysql_admin_created ]; then
-	echo "MySQL 'admin' user already created!"
-	exit 0
+    echo "MySQL 'admin' user already created!"
+    exit 0
 fi
 
 /usr/bin/mysqld_safe > /dev/null 2>&1 &
@@ -12,9 +12,9 @@ _word=$( [ ${MYSQL_PASS} ] && echo "preset" || echo "random" )
 RET=1
 while [[ RET -ne 0 ]]; do
     echo "=> Waiting for confirmation of MySQL service startup"
-	sleep 5
-	mysql -uroot -e "status" > /dev/null 2>&1
-	RET=$?
+    sleep 5
+    mysql -uroot -e "status" > /dev/null 2>&1
+    RET=$?
 done
 
 echo "=> Creating MySQL admin user with ${_word} password"
