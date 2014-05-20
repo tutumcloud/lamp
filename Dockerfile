@@ -30,5 +30,8 @@ RUN a2enmod rewrite
 RUN git clone https://github.com/fermayo/hello-world-lamp.git /app
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
 
+# Add volumes for MySQL and Apache server
+VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app"]
+
 EXPOSE 80 3306
 CMD ["/run.sh"]
