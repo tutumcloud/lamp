@@ -21,7 +21,7 @@ Running your LAMP docker image
 
 Start your image binding the external ports 80 and 3306 in all interfaces to your container:
 
-	docker run -d -p 80:80 -p 3306:3306 tutum/lamp
+	docker run -d --net=host tutum/lamp
 
 Test your deployment:
 
