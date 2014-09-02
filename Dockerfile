@@ -26,8 +26,6 @@ RUN rm -rf /var/lib/mysql/*
 
 # Add MySQL utils
 ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
-ADD import_sql.sh /import_sql.sh
-ADD create_db.sh /create_db.sh
 RUN chmod 755 /*.sh
 
 # config to enable .htaccess
