@@ -1,0 +1,10 @@
+machine:
+  services:
+    - docker
+dependencies:
+  override:
+    - docker build -t sut .
+test:
+  override:
+    - docker run -d -p 80:80 sut; sleep 10
+    - curl --retry 10 --retry-delay 5 -L -I -f http://localhost:80/
