@@ -2,15 +2,9 @@ FROM ubuntu:trusty
 MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
 
 # Install packages
-RUN apt-get update 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install git 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install libapache2-mod-php5
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install mysql-server 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install php5-mysql 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install pwgen 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install php-apc
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+  apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc
 
 # Add image configuration and scripts
 ADD start-apache2.sh /start-apache2.sh
