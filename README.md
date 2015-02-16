@@ -115,7 +115,7 @@ You can now test your new admin password:
 Disabling .htaccess
 --------------------
 
-`.htacess` is enabled by default. To disable `.htacess`, you can remove the following contents from `Dockerfile`
+`.htaccess` is enabled by default. To disable `.htaccess`, you can remove the following contents from `Dockerfile`
 
 	# config to enable .htaccess
     ADD apache_default /etc/apache2/sites-available/000-default.conf
