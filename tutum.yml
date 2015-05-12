@@ -1,0 +1,6 @@
+lamp:
+  image: tutum/lamp
+  ports:
+    - 80:80
+    - 3306:3306
+    
