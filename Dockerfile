@@ -4,7 +4,7 @@ MAINTAINER Fernando Mayo <fernando@tutum.co>, Feng Honglin <hfeng@tutum.co>
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
-  apt-get -y install supervisor git apache2 libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt && \
+  apt-get -y install supervisor git apache2 mcrypt libapache2-mod-php5 mysql-server php5-mysql pwgen php-apc php5-mcrypt php5-curl && \
   echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Add image configuration and scripts
@@ -27,6 +27,9 @@ RUN chmod 755 /*.sh
 ADD apache_default /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
+# Run fix PHP mcrypt problem
+RUN php5enmod mcrypt && service apache2 restart
+
 # Configure /app folder with sample app
 RUN git clone https://github.com/fermayo/hello-world-lamp.git /app
 RUN mkdir -p /app && rm -fr /var/www/html && ln -s /app /var/www/html
@@ -36,7 +39,7 @@ ENV PHP_UPLOAD_MAX_FILESIZE 10M
 ENV PHP_POST_MAX_SIZE 10M
 
 # Add volumes for MySQL 
-VOLUME  ["/etc/mysql", "/var/lib/mysql" ]
+VOLUME  ["/etc/mysql", "/var/lib/mysql", "/app"]
 
 EXPOSE 80 3306
 CMD ["/run.sh"]
