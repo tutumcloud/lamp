@@ -34,5 +34,8 @@
 	# Set HTTPS environment variable if we came in over secure
 	#  channel.
 	SetEnvIf x-forwarded-proto https HTTPS=on
+	SetEnvIf x-forwarded-port 443 SERVER_PORT=443
 
+	php_value upload_max_filesize 20M
+	php_value post_max_size 20M
 </VirtualHost>
